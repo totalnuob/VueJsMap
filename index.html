@@ -2,118 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TestExe</title>
+    <title>VueJS Test Exercise</title>
+    <!--All required CSS dependencies-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
           integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
           crossorigin=""/>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-    <!-- import CSS -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui@2.4.0/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="styles.css">
-    <!-- import JavaScript -->
+</head>
+<body>
+    <!--All required JS dependencies-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.4.0/lib/index.js"></script>
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
             integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
             crossorigin=""></script>
 
-</head>
-<body>
-
     <div id="app">
+        <!--Rest of the app goes here-->
         <el-row :gutter="20">
             <el-col :span="6">
                 <el-tree
-                    :data="treelist"
-                    show-checkbox
-                    node-key="id"
-                    :default-expanded-keys="[1, 2, 3, 4]"
-                    :props="defaultProps">
+                        :data="treeList"
+                        show-checkbox
+                        node-key="id"
+                        default-expand-all
+                        ref="tree"
+                        @check-change="handleCheckChange"
+                        @check="handleCheck"
+                        :props="defaultProps">
+
                 </el-tree>
             </el-col>
+
             <el-col :span="12">
-                <div id="mapid"></div>
+                <div id="mapid">
+
+                </div>
             </el-col>
-            <el-col :span="6"></el-col>
+
+            <el-col :span="6">
+                <div class="butts">
+                    <el-button @click="getCheckedNodes">Get checked nodes</el-button>
+                </div>
+            </el-col>
         </el-row>
     </div>
 
-    <script>
-        new Vue({
-            el: '#app',
-            data() {
-                return {
-                    treelist: [{
-                        id: 1,
-                        label: 'USA',
-                        children: [{
-                            id: 2,
-                            label: 'Maine',
-                            children: [{
-                                id: 5,
-                                label: 'Portland',
-                                coords: [43.65744, -70.257568]
-                            }, {
-                                id: 6,
-                                label: 'Lewiston',
-                                coords: [44.098928, -70.215168]
-                            }, {
-                                id: 7,
-                                label: 'Bangor',
-                                coords: [44.800109, -68.776474]
-                            }]
-                        }, {
-                            id: 3,
-                            label: 'New Hampshire',
-                            children: [{
-                                id: 8,
-                                label: 'Manchester'
-                            }, {
-                                id: 9,
-                                label: 'Nashua'
-                            }]
-                        }, {
-                            id: 4,
-                            label: 'Vermont',
-                            children: [{
-                                id: 10,
-                                label: 'Burlington'
-                            }, {
-                                id: 11,
-                                label: 'Rutland'
-                            }]
-                        }]
-                    }],
-                    defaultProps: {
-                        children: 'children',
-                        label: 'label'
-                    }
-                }
+    <script src="main.js"></script>
 
-            },
-            methods: {
-                addMarker: function (event) {
-                    
-                }
-            },
-            created() {
 
-            }
-        })
-
-        var mymap = L.map('mapid').setView([37.8, -96], 4);
-
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-            maxZoom: 18,
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-            '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            id: 'mapbox.light'
-        }).addTo(mymap);
-
-        L.marker([43.65744, -70.257568]).addTo(mymap);
-        L.marker([44.098928, -70.215168]).addTo(mymap);
-        L.marker([44.800109, -68.776474]).addTo(mymap);
-
-    </script>
 </body>
 </html>
